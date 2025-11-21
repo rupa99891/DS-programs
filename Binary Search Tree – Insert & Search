@@ -1,0 +1,52 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+};
+
+Node* createNode(int x) {
+    Node* newNode = new Node();
+    newNode->data = x;
+    newNode->left = newNode->right = NULL;
+    return newNode;
+}
+
+Node* insertNode(Node* root, int x) {
+    if (root == NULL)
+        return createNode(x);
+
+    if (x < root->data)
+        root->left = insertNode(root->left, x);
+    else
+        root->right = insertNode(root->right, x);
+
+    return root;
+}
+
+bool searchNode(Node* root, int key) {
+    if (root == NULL)
+        return false;
+
+    if (root->data == key)
+        return true;
+    else if (key < root->data)
+        return searchNode(root->left, key);
+    else
+        return searchNode(root->right, key);
+}
+
+int main() {
+    Node* root = NULL;
+
+    root = insertNode(root, 50);
+    insertNode(root, 30);
+    insertNode(root, 70);
+    insertNode(root, 20);
+    insertNode(root, 40);
+
+    cout << "Searching 40: " << (searchNode(root, 40) ? "Found" : "Not Found") << endl;
+    cout << "Searching 90: " << (searchNode(root, 90) ? "Found" : "Not Found") << endl;
+}
