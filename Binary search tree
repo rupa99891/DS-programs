@@ -1,0 +1,42 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+};
+
+Node* createNode(int x) {
+    Node* newNode = new Node();
+    newNode->data = x;
+    newNode->left = newNode->right = NULL;
+    return newNode;
+}
+
+Node* insertNode(Node* root, int x) {
+    if (!root) return createNode(x);
+    if (x < root->data)
+        root->left = insertNode(root->left, x);
+    else
+        root->right = insertNode(root->right, x);
+    return root;
+}
+
+void inorder(Node* root) {
+    if (!root) return;
+    inorder(root->left);
+    cout << root->data << " ";
+    inorder(root->right);
+}
+
+int main() {
+    Node* root = NULL;
+    root = insertNode(root, 50);
+    insertNode(root, 30);
+    insertNode(root, 70);
+    insertNode(root, 20);
+    insertNode(root, 60);
+
+    inorder(root);
+}
