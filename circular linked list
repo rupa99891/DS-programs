@@ -1,0 +1,98 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+Node* head = NULL;
+
+// Insert at end
+void insertEnd(int value) {
+    Node* newNode = new Node();
+    newNode->data = value;
+
+    if (head == NULL) {
+        head = newNode;
+        newNode->next = head;   // circular link
+        return;
+    }
+
+    Node* temp = head;
+    while (temp->next != head)
+        temp = temp->next;
+
+    temp->next = newNode;
+    newNode->next = head;       // circular link
+}
+
+// Delete a node
+void deleteNode(int value) {
+    if (head == NULL) return;
+
+    Node *curr = head, *prev = NULL;
+
+    // Case: deleting head
+    if (curr->data == value) {
+        while (curr->next != head)
+            curr = curr->next;
+
+        // Only one node
+        if (curr == head) {
+            head = NULL;
+            return;
+        }
+
+        curr->next = head->next;
+        head = head->next;
+        return;
+    }
+
+    // Search for node to delete
+    curr = head;
+    do {
+        prev = curr;
+        curr = curr->next;
+        if (curr->data == value) break;
+    } while (curr != head);
+
+    if (curr->data == value)
+        prev->next = curr->next;
+}
+
+// Display list
+void display() {
+    if (head == NULL) {
+        cout << "List is empty\n";
+        return;
+    }
+
+    Node* temp = head;
+    do {
+        cout << temp->data << " ";
+        temp = temp->next;
+    } while (temp != head);
+
+    cout << endl;
+}
+
+int main() {
+    insertEnd(10);
+    insertEnd(20);
+    insertEnd(30);
+    insertEnd(40);
+
+    cout << "Circular List: ";
+    display();
+
+    deleteNode(20);
+    cout << "After deleting 20: ";
+    display();
+
+    deleteNode(10);
+    cout << "After deleting 10: ";
+    display();
+
+    return 0;
+}
