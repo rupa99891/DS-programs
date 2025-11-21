@@ -1,0 +1,62 @@
+#ifndef STACK_H
+#define STACK_H
+
+#include <iostream>
+using namespace std;
+
+struct Node{
+    int data;
+    Node* next;
+    Node(int val) {
+        data = val;
+        next = NULL;
+    }
+};
+
+struct Stack{
+Node* top = nullptr;
+
+void push(int val){
+   Node* nn=new Node(val);
+   nn -> next = top;
+   top=nn; 
+}
+
+void Pop() {
+    if (top == NULL) {
+     cout <<"stack underflow\n";
+     return;
+        }
+    Node* temp = top;
+    top = top->next;
+    delete temp;
+    }
+
+    int Peek() {
+        if (top == NULL) {
+            cout << "Stack is empty";
+            return -1;
+        }
+        return top->data;
+    }
+
+    int Isempty() {
+        if(top == NULL){
+        	return 1;
+		}
+		else{
+			return 0;
+		}
+    }
+
+    void Display() {
+        Node* temp = top;
+        while (temp != NULL) {
+            cout << temp ->data << " ";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+};
+
+#endif
