@@ -1,0 +1,59 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+Node* head = NULL;
+
+void insertAtEnd(int x) {
+    Node* newNode = new Node();
+    newNode->data = x;
+    newNode->next = NULL;
+
+    if (head == NULL) {
+        head = newNode;
+        return;
+    }
+
+    Node* temp = head;
+    while (temp->next != NULL)
+        temp = temp->next;
+    temp->next = newNode;
+}
+
+void deleteValue(int x) {
+    if (head == NULL) return;
+    if (head->data == x) {
+        head = head->next;
+        return;
+    }
+
+    Node* temp = head;
+    while (temp->next && temp->next->data != x)
+        temp = temp->next;
+
+    if (temp->next)
+        temp->next = temp->next->next;
+}
+
+void display() {
+    Node* temp = head;
+    while (temp != NULL) {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+    cout << endl;
+}
+
+int main() {
+    insertAtEnd(10);
+    insertAtEnd(20);
+    insertAtEnd(30);
+    display();
+
+    deleteValue(20);
+    display();
+}
